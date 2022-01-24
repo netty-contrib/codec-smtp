@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 The Netty Project
+ * Copyright 2016 The Netty Project
  *
  * The Netty Project licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -13,18 +13,25 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-package io.netty.contrib.template;
+package io.netty.contrib.handler.codec.smtp;
 
-import io.netty.buffer.api.Buffer;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoderForBuffer;
+import io.netty.util.internal.UnstableApi;
+
+import java.util.List;
 
 /**
- * Example Netty extension.
+ * An SMTP request.
  */
-public class ExampleDecoder extends ByteToMessageDecoderForBuffer {
-    @Override
-    protected void decode(ChannelHandlerContext ctx, Buffer in) throws Exception {
-        ctx.fireChannelRead(in.split());
-    }
+@UnstableApi
+public interface SmtpRequest {
+
+    /**
+     * Returns the {@link SmtpCommand} that belongs to the request.
+     */
+    SmtpCommand command();
+
+    /**
+     * Returns a {@link List} which holds all the parameters of a request, which may be an empty list.
+     */
+    List<CharSequence> parameters();
 }
